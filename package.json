@@ -17,8 +17,7 @@
     "qrcode": "^1.5.4",
     "chrome-aws-lambda": "^10.1.0",
     "socket.io": "^4.8.1",
-    "url": "^0.11.4",
-    "puppeteer-core": "^13.0.0",
+    "url": "^0.11.4", 
     "whatsapp-web.js": "^1.26.0"
   }
 }
