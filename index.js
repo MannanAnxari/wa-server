@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 // // import { '* } from "../config/env.ts";
 // // const { '* } = require("../config/env");
 // const { '* } = await import("../config/env.js");
-import chromium from "chrome-aws-lambda"
+import chromium from "chrome-aws-lambda";
 
 const app = express();
 const server = createServer(app);
@@ -47,29 +47,14 @@ const SESSION_DIR = path.join(process.env.TMPDIR || "/tmp", ".wwebjs_auth");
 const initializeWhatsAppClient = async (businessID) => {
   const sessionDir = path.join(SESSION_DIR, `session-${businessID}`);
   await fs.ensureDir(sessionDir);
- 
-  const puppeteerOptions = { 
-    args: [
-      "--no-sandbox",
-      "--disable-setuid-sandbox",
-      "--disable-dev-shm-usage",
-      "--disable-accelerated-2d-canvas",
-      "--no-first-run",
-      "--no-zygote",
-      "--single-process",
-      "--disable-gpu",
-    ],
-    ignoreDefaultArgs: ["--disable-extensions"], 
+
+  const puppeteerOptions = {
+    args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
+    executablePath: await chromium.executablePath(),
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
-  }
-
-
-  // if (CHROME_PATH) {
-  //   puppeteerOptions.executablePath = CHROME_PATH;
-  // }
+  };
 
   const client = new Client({
     authStrategy: new LocalAuth({
