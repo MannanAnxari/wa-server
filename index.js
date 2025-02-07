@@ -18,7 +18,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: '*',
+    origin: 'http://localhost:5173',
     // origin: "https://laundry-pos.axetechsolutions.com",
     methods: ["GET", "POST"],
     credentials: true,
@@ -27,7 +27,7 @@ const io = new Server(server, {
 
 app.use(
   cors({
-    origin: '*',
+    origin: 'http://localhost:5173',
     // origin: "https://laundry-pos.axetechsolutions.com",
     methods: ["GET", "POST"],
     credentials: true,
