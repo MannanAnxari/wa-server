@@ -18,7 +18,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: "http://localhost:5173",
     // origin: "https://laundry-pos.axetechsolutions.com",
     methods: ["GET", "POST"],
     credentials: true,
@@ -27,7 +27,7 @@ const io = new Server(server, {
 
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: "http://localhost:5173",
     // origin: "https://laundry-pos.axetechsolutions.com",
     methods: ["GET", "POST"],
     credentials: true,
@@ -64,7 +64,7 @@ const initializeWhatsAppClient = async (businessID) => {
         "--single-process",
         "--disable-gpu",
       ],
-      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+      executablePath: CHROME_PATH,
       ignoreDefaultArgs: ["--disable-extensions"],
     },
   });
