@@ -62,9 +62,9 @@ const initializeWhatsAppClient = async (businessID) => {
     ignoreDefaultArgs: ["--disable-extensions"],
   };
 
-  if (CHROME_PATH) {
-    puppeteerOptions.executablePath = CHROME_PATH;
-  }
+  // if (CHROME_PATH) {
+  //   puppeteerOptions.executablePath = CHROME_PATH;
+  // }
 
   const client = new Client({
     authStrategy: new LocalAuth({
