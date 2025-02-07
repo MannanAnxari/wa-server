@@ -4,6 +4,13 @@
         {
             "src": "index.js",
             "use": "@vercel/node"
+        },
+        {
+            "src": "index.js",
+            "use": "@vercel/node",
+            "config": {
+                "buildCommand": "chmod +x vercel-build.sh && ./vercel-build.sh"
+            }
         }
     ],
     "routes": [
@@ -21,6 +28,7 @@
         }
     ],
     "env": {
-        "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": "true"
+        "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": "true",
+        "CHROME_PATH": "/usr/bin/google-chrome-stable"
     }
 }

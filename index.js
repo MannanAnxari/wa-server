@@ -47,26 +47,31 @@ const initializeWhatsAppClient = async (businessID) => {
   const sessionDir = path.join(SESSION_DIR, `session-${businessID}`);
   await fs.ensureDir(sessionDir);
 
+  const puppeteerOptions = {
+    headless: true,
+    args: [
+      "--no-sandbox",
+      "--disable-setuid-sandbox",
+      "--disable-dev-shm-usage",
+      "--disable-accelerated-2d-canvas",
+      "--no-first-run",
+      "--no-zygote",
+      "--single-process",
+      "--disable-gpu",
+    ],
+    ignoreDefaultArgs: ["--disable-extensions"],
+  };
+
+  if (CHROME_PATH) {
+    puppeteerOptions.executablePath = CHROME_PATH;
+  }
+
   const client = new Client({
     authStrategy: new LocalAuth({
       clientId: businessID,
       dataPath: SESSION_DIR,
     }),
-    puppeteer: {
-      headless: true,
-      args: [
-        "--no-sandbox",
-        "--disable-setuid-sandbox",
-        "--disable-dev-shm-usage",
-        "--disable-accelerated-2d-canvas",
-        "--no-first-run",
-        "--no-zygote",
-        "--single-process",
-        "--disable-gpu",
-      ],
-      executablePath: CHROME_PATH,
-      ignoreDefaultArgs: ["--disable-extensions"],
-    },
+    puppeteer: puppeteerOptions,
   });
 
   client.on("qr", async (qr) => {
