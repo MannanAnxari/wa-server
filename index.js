@@ -12,14 +12,13 @@ import { fileURLToPath } from "url";
 // // import { '* } from "../config/env.ts";
 // // const { '* } = require("../config/env");
 // const { '* } = await import("../config/env.js");
-import chromium from "@sparticuz/chromium"
 
 const app = express();
 const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: '*',
     // origin: "https://laundry-pos.axetechsolutions.com",
     methods: ["GET", "POST"],
     credentials: true,
@@ -28,7 +27,7 @@ const io = new Server(server, {
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: '*',
     // origin: "https://laundry-pos.axetechsolutions.com",
     methods: ["GET", "POST"],
     credentials: true,
@@ -48,20 +47,26 @@ const initializeWhatsAppClient = async (businessID) => {
   const sessionDir = path.join(SESSION_DIR, `session-${businessID}`);
   await fs.ensureDir(sessionDir);
 
-  const puppeteerOptions = {
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath,
-    headless: chromium.headless,
-    ignoreHTTPSErrors: true,
-  };
-
   const client = new Client({
     authStrategy: new LocalAuth({
       clientId: businessID,
       dataPath: SESSION_DIR,
     }),
-    puppeteer: puppeteerOptions,
+    puppeteer: {
+      headless: true,
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-accelerated-2d-canvas",
+        "--no-first-run",
+        "--no-zygote",
+        "--single-process",
+        "--disable-gpu",
+      ],
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+      ignoreDefaultArgs: ["--disable-extensions"],
+    },
   });
 
   client.on("qr", async (qr) => {
