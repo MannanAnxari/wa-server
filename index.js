@@ -12,6 +12,7 @@ import { fileURLToPath } from "url";
 // // import { '* } from "../config/env.ts";
 // // const { '* } = require("../config/env");
 // const { '* } = await import("../config/env.js");
+import chromium from "chrome-aws-lambda"
 
 const app = express();
 const server = createServer(app);
@@ -46,9 +47,8 @@ const SESSION_DIR = path.join(process.env.TMPDIR || "/tmp", ".wwebjs_auth");
 const initializeWhatsAppClient = async (businessID) => {
   const sessionDir = path.join(SESSION_DIR, `session-${businessID}`);
   await fs.ensureDir(sessionDir);
-
-  const puppeteerOptions = {
-    headless: true,
+ 
+  const puppeteerOptions = { 
     args: [
       "--no-sandbox",
       "--disable-setuid-sandbox",
@@ -59,8 +59,13 @@ const initializeWhatsAppClient = async (businessID) => {
       "--single-process",
       "--disable-gpu",
     ],
-    ignoreDefaultArgs: ["--disable-extensions"],
-  };
+    ignoreDefaultArgs: ["--disable-extensions"], 
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath,
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  }
+
 
   // if (CHROME_PATH) {
   //   puppeteerOptions.executablePath = CHROME_PATH;

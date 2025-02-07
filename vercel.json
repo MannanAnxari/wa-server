@@ -3,10 +3,7 @@
     "builds": [
       {
         "src": "index.js",
-        "use": "@vercel/node",
-        "config": {
-          "buildCommand": "npm install"
-        }
+        "use": "@vercel/node"
       }
     ],
     "routes": [
@@ -15,10 +12,7 @@
         "dest": "index.js",
         "methods": ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"]
       }
-    ],
-    "env": {
-      "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": "false"
-    }
+    ]
   }
   
   
