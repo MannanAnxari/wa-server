@@ -12,7 +12,7 @@ import { fileURLToPath } from "url";
 // // import { '* } from "../config/env.ts";
 // // const { '* } = require("../config/env");
 // const { '* } = await import("../config/env.js");
-import chromium from "chrome-aws-lambda";
+import chromium from "@sparticuz/chromium"
 
 const app = express();
 const server = createServer(app);
@@ -51,7 +51,7 @@ const initializeWhatsAppClient = async (businessID) => {
   const puppeteerOptions = {
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
+    executablePath: await chromium.executablePath,
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
   };
